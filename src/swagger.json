@@ -1,0 +1,185 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Api Documentation using swagger",
+    "description": "User rest api's",
+    "contact": {
+      "name": "ShoaibKhan",
+      "email": "shoaib@gmail.com",
+      "url": "http://localhost:4002/api-swagger/"
+    }
+  },
+  "basepath": "/",
+  "schemes": [
+    "http"
+],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Api for users"
+    },
+    {
+      "name": "Posts",
+      "description": "user posts API"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "description": "This api is used for getting all users.",
+        "responses": {
+          "200": {
+            "description": "All user fetced successfully",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/definitions/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register User",
+        "description": "Any User can Register themselves by this Api.",
+        "operationId":"registerUser",
+        "requestBody": {
+            "description":"Enter your details according to schema",
+            "required":"true",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref":"#/definitions/User"
+                }
+              }
+            }
+          },
+        "responses": {
+          "200": {
+            "description": "User created successfully",
+            "content":{
+              "application/json": {
+               "schema":{
+                "$ref":"#/definitions/User"
+               }
+              }
+            }
+          },
+          "403": {
+            "description": "plz enter correct input"
+          }
+        }
+    }
+
+        },
+    "/users/{userid}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get User by his ID",
+        "description": "This api fetch only one user by his id",
+         "parameters": [
+        {
+          "name": "userid",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+        "responses": {
+          "200": {
+            "description": "user found",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/definitions/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found for this id"
+          }
+        }
+      },
+      "put": {
+        "tags":["Users"],
+        "summary":"Update user by id",
+        "description": "This api route updade any user by his given Id",
+        "parameters":[{
+          "name":"userid",
+          "in": "path",
+          "type":"string",
+          "required":"true"
+        }],
+        "requestBody":{
+          "description": "Enter details of the user to update",
+          "content":{
+            "application/json":{
+              "schema":{
+                "$ref":"#/definitions/User"
+              }
+            }
+          }
+        },
+        "responses":{
+          "200":{
+            "description": "User updated successfully",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/definitions/User"
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "User not found to update"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete User by his Id",
+        "description": "This api route delete a single user by his id.",
+        "parameters":[{
+          "name": "userid",
+          "in":"path",
+          "required":"true",
+          "type":"string"
+        }],
+        "responses":{
+          "200":{
+            "description": "User deleted successfully"
+          },
+          "404":{
+            "description": "User not found to delete"
+          }
+        }
+      }
+    }
+    
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          
+          "lowercase": "true"
+        },
+        "password": {
+          "type": "string"
+          
+        },
+        "name": { "type": "string" }
+      }
+    }
+  }
+}
+
+
